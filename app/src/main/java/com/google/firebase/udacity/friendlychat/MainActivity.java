@@ -15,6 +15,7 @@
  */
 package com.google.firebase.udacity.friendlychat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -208,6 +209,18 @@ public class MainActivity extends AppCompatActivity {
         mChildEventListener = null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED){
+                Toast.makeText(this, "Signed in calceled", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     private void attachDatabaseReadListener() {
         if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
@@ -239,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
             };
             mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
         }
+
+
     }
 
 
